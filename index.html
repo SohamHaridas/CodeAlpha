@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="style.css">
+   
+</head>
+
+<body>
+    
+  <div class="gallery">
+    <img src="./pexels-belle-co-99483-847393.jpg" alt="Image 1">
+    <img src="./pexels-naushil-skyhawk-asia-151720-638738.jpg" alt="Image 2">
+    <img src="./pexels-monicore-134058.jpg" alt="Image 3">
+    <img src="./pexels-inspiredimages-133394.jpg" alt="Image 4">
+    <img src="./pexels-pixabay-45853.jpg" alt="Image 5">
+    <img src="./pexels-pixabay-39857.jpg" alt="Image 6">
+    
+    <img src="./pexels-pixabay-53581.jpg" alt="Image 7">
+    <img src="./pexels-chevanon-1335971.jpg" alt="Image 8">
+    <img src="./pexels-pixabay-144234.jpg" alt="Image 9">
+    <img src="./pexels-pixabay-326900.jpg" alt="Image 10">
+    <img src="./pexels-pixabay-33045.jpg" alt="Image 11">
+    <img src="./pexels-fotofyn-634613.jpg" alt="Image 12">
+  </div>
+  <script src="script.js"></script>
+  <div class="modal">
+    <span class="close">&times;</span>
+    <span class="nav prev">&#8249;</span>
+    <img src="" alt="">
+    <span class="nav next">&#8250;</span>
+  </div>
+  <script>
+    const galleryImages = document.querySelectorAll('.gallery img');
+    const modal = document.querySelector('.modal');
+    const modalImg = modal.querySelector('img');
+    const closeBtn = modal.querySelector('.close');
+    const prevBtn = modal.querySelector('.prev');
+    const nextBtn = modal.querySelector('.next');
+
+    let currentIndex = 0;
+
+    function openModal(index) {
+      currentIndex = index;
+      modalImg.src = galleryImages[index].src;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function showPrevImage() {
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      modalImg.src = galleryImages[currentIndex].src;
+    }
+
+    function showNextImage() {
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      modalImg.src = galleryImages[currentIndex].src;
+    }
+
+    galleryImages.forEach((img, index) => {
+      img.addEventListener('click', () => openModal(index));
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+    prevBtn.addEventListener('click', showPrevImage);
+    nextBtn.addEventListener('click', showNextImage);
+
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (modal.style.display === 'flex') {
+        if (e.key === 'ArrowLeft') showPrevImage();
+        if (e.key === 'ArrowRight') showNextImage();
+        if (e.key === 'Escape') closeModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
